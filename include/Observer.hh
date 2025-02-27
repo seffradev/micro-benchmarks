@@ -1,8 +1,7 @@
-#include <benchmark/benchmark.h>
+#ifndef _OBSERVER_HH_
+#define _OBSERVER_HH_
 
 #include <functional>
-#include <vector>
-
 template <typename T>
 class TemplateEmitter {
 public:
@@ -25,8 +24,6 @@ void subscribe_to(Emitter emitter, Callbacks... callbacks) {
     [&emitter, &callbacks...] { emitter->subscribe(callbacks...); }();
 }
 
-class TemplateImpl1 : public TemplateEmitter<int> {};
-
 template <typename T>
 class VirtualEmitter;
 
@@ -40,7 +37,9 @@ protected:
 template <typename T>
 class VirtualEmitter {
 public:
-    void subscribe(VirtualListener<T>* listener) { listeners.emplace_back(listener); }
+    void subscribe(VirtualListener<T>* listener) {
+        listeners.emplace_back(listener);
+    }
 
 protected:
     void notify_listeners(const T& event) {
@@ -53,39 +52,4 @@ private:
     std::vector<VirtualListener<T>*> listeners;
 };
 
-class ListenerImpl : public VirtualListener<int> {
-protected:
-    void notify(const int& event) override {}
-};
-
-class EmitterImpl : public VirtualEmitter<int> {
-public:
-    void do_thing() { notify_listeners(std::rand()); }
-};
-
-static void BM_Template(benchmark::State& state) {
-    ListenerImpl listener;
-    EmitterImpl  emitter;
-
-    emitter.subscribe(&listener);
-
-    for (auto _ : state) {
-        emitter.do_thing();
-    }
-}
-
-static void BM_Virtual(benchmark::State& state) {
-    ListenerImpl listener;
-    EmitterImpl  emitter;
-
-    emitter.subscribe(&listener);
-
-    for (auto _ : state) {
-        emitter.do_thing();
-    }
-}
-
-BENCHMARK(BM_Template);
-BENCHMARK(BM_Virtual);
-
-BENCHMARK_MAIN();
+#endif

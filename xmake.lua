@@ -12,14 +12,9 @@ else
   set_strip("all")
 end
 
-add_requires("benchmark")
+target("benchmarks")
+set_kind("static")
+-- add_files("src/**.cc")
+add_includedirs("include", { public = true })
 
-for _, file in ipairs(os.files("**.cc")) do
-  local name = path.basename(file)
-  target(name)
-  set_kind("binary")
-  add_packages("benchmark")
-  set_default(false)
-  add_files(file)
-  add_tests("default")
-end
+includes("**/xmake.lua")
