@@ -9,7 +9,7 @@ public:
     void subscribe(Callback callback) { callbacks.emplace_back(callback); }
 
 protected:
-    void notify_listeners(const T& event) {
+    void notifyListeners(const T& event) {
         for (auto&& callback : callbacks) {
             callback(event);
         }
@@ -20,7 +20,7 @@ private:
 };
 
 template <typename Emitter, typename... Callbacks>
-void subscribe_to(Emitter emitter, Callbacks... callbacks) {
+void subscribeTo(Emitter emitter, Callbacks... callbacks) {
     [&emitter, &callbacks...] { emitter->subscribe(callbacks...); }();
 }
 
@@ -42,7 +42,7 @@ public:
     }
 
 protected:
-    void notify_listeners(const T& event) {
+    void notifyListeners(const T& event) {
         for (auto&& listener : listeners) {
             listener->notify(event);
         }

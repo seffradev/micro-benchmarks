@@ -11,7 +11,7 @@ protected:
 
 class EmitterImpl : public VirtualEmitter<int> {
 public:
-    void dispatch() { notify_listeners(std::rand()); }
+    void dispatch() { notifyListeners(std::rand()); }
 };
 
 // static void BM_template(benchmark::State& state) {

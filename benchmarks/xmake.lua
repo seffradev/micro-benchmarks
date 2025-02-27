@@ -2,7 +2,7 @@ add_requires("benchmark")
 
 for _, file in ipairs(os.files("**.cc")) do
   local name = path.basename(file)
-  target(name)
+  target("Benchmark" .. name)
   set_kind("binary")
   add_packages("benchmark")
   set_default(false)

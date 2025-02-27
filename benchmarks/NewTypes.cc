@@ -3,7 +3,7 @@
 #include <NewTypes.hh>
 #include <map>
 
-constinit size_t number_of_elements = 100000;
+constinit size_t numberOfElements = 100000;
 
 template <typename T>
 std::string_view find(const std::map<T, std::string>& map) {
@@ -16,7 +16,7 @@ std::string_view find(const std::map<T, std::string>& map) {
 
 template <typename T>
 void insert(std::map<T, std::string>& map) {
-    for (size_t i = 0; i < number_of_elements; ++i) {
+    for (size_t i = 0; i < numberOfElements; ++i) {
         map.emplace(T(std::rand()), "foobar");
     }
 }
