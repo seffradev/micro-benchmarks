@@ -35,6 +35,16 @@ constexpr auto lambdas(const VariantEvent& event) {
         event);
 }
 
+constexpr auto noexceptLambdas(const VariantEvent& event) {
+    return std::visit(
+        Overloads{
+            [](int i) noexcept { return std::hash<int>{}(i); },
+            [](std::string s) noexcept { return std::hash<std::string>{}(s); },
+            [](FatType ft) noexcept { return std::hash<FatType>{}(ft); },
+        },
+        event);
+}
+
 constexpr auto getIf(const VariantEvent& event) {
     if (auto ie = std::get_if<int>(&event)) {
         return std::hash<int>{}(*ie);

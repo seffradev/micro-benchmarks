@@ -29,6 +29,15 @@ static void BM_lambda(benchmark::State& state) {
     }
 }
 
+static void BM_noexceptLambda(benchmark::State& state) {
+    auto events = setupVariant();
+    for (auto _ : state) {
+        for (const auto& event : events) {
+            benchmark::DoNotOptimize(noexceptLambdas(event));
+        }
+    }
+}
+
 static void BM_getIf(benchmark::State& state) {
     auto events = setupVariant();
     for (auto _ : state) {
@@ -75,6 +84,7 @@ static void BM_inheritance(benchmark::State& state) {
 }
 
 BENCHMARK(BM_lambda);
+BENCHMARK(BM_noexceptLambda);
 BENCHMARK(BM_getIf);
 BENCHMARK(BM_holdsAlternative);
 BENCHMARK(BM_inheritance);
