@@ -13,42 +13,47 @@
 constinit size_t numberOfElements = 100000;
 
 static void BM_ranges(benchmark::State& state) {
-    auto device  = std::random_device{};
-    auto strings = generate(device(), numberOfElements);
+    auto device   = std::random_device{}();
+    auto needle   = generateOne(device);
+    auto haystack = generate(device, numberOfElements);
     for (auto _ : state) {
-        benchmark::DoNotOptimize(ranges(strings));
+        benchmark::DoNotOptimize(ranges(needle, haystack));
     }
 }
 
 static void BM_strcmp(benchmark::State& state) {
-    auto device  = std::random_device{};
-    auto strings = generate(device(), numberOfElements);
+    auto device   = std::random_device{}();
+    auto needle   = generateOne(device);
+    auto haystack = generate(device, numberOfElements);
     for (auto _ : state) {
-        benchmark::DoNotOptimize(strcmp(strings));
+        benchmark::DoNotOptimize(strcmp(needle, haystack));
     }
 }
 
 static void BM_materialize(benchmark::State& state) {
-    auto device  = std::random_device{};
-    auto strings = generate(device(), numberOfElements);
+    auto device   = std::random_device{}();
+    auto needle   = generateOne(device);
+    auto haystack = generate(device, numberOfElements);
     for (auto _ : state) {
-        benchmark::DoNotOptimize(materialize(strings));
+        benchmark::DoNotOptimize(materialize(needle, haystack));
     }
 }
 
 static void BM_forLoop(benchmark::State& state) {
-    auto device  = std::random_device{};
-    auto strings = generate(device(), numberOfElements);
+    auto device   = std::random_device{}();
+    auto needle   = generateOne(device);
+    auto haystack = generate(device, numberOfElements);
     for (auto _ : state) {
-        benchmark::DoNotOptimize(forLoop(strings));
+        benchmark::DoNotOptimize(forLoop(needle, haystack));
     }
 }
 
 static void BM_equal(benchmark::State& state) {
-    auto device  = std::random_device{};
-    auto strings = generate(device(), numberOfElements);
+    auto device   = std::random_device{}();
+    auto needle   = generateOne(device);
+    auto haystack = generate(device, numberOfElements);
     for (auto _ : state) {
-        benchmark::DoNotOptimize(equal(strings));
+        benchmark::DoNotOptimize(equal(needle, haystack));
     }
 }
 
