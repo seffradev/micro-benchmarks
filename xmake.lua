@@ -8,7 +8,7 @@ if is_mode("debug") then
   set_optimize("none")
 else
   set_symbols("hidden")
-  set_optimize("fastest")
+  set_optimize("fast")
   set_strip("all")
 end
 
